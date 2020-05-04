@@ -2,11 +2,13 @@
 # ------------------------------------------------------------------------------
 USE_DOCKER=yes
 IPYTHONDIR=/app/.ipython
+DATABASE_URL=postgres://JXmbsDUNstLjTfnxqIHUTprCkWtoIIbA:ZtxGg6vIRiEdQgPHY7cc5qQNa73YB0xoZy0Gy0NdqYBuVN09sMtXUGS212Xu8Jia@postgres:5432/social_network
 # Redis
 # ------------------------------------------------------------------------------
 REDIS_URL=redis://redis:6379/0
 
 # Celery
+CELERY_BROKER_URL=redis://redis:6379/0
 # ------------------------------------------------------------------------------
 
 # Flower
