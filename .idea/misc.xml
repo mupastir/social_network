@@ -3,4 +3,5 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.8.2 Docker Compose (django at [/home/oleg/PycharmProjects/social_network/local.yml])" project-jdk-type="Python SDK" />
 </project>
