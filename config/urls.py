@@ -3,28 +3,32 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
-from django.views.generic import TemplateView
-from rest_framework.authtoken.views import obtain_auth_token
+
+from rest_framework_jwt.views import (
+    obtain_jwt_token,
+    refresh_jwt_token,
+    verify_jwt_token
+)
+from rest_framework_swagger.views import get_swagger_view
+
+
+schema_view = get_swagger_view(title='Social API')
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    ),
-    # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
-    path("users/", include("social_network.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
-    # DRF auth token
-    path("auth-token/", obtain_auth_token),
+    path('', schema_view),
+    path('api/accounts/', include('social_network.users.urls')),
+    path('api/posts/', include('social_network.posts.urls')),
+    # DRF auth jwt token
+    path('api/token/auth/', obtain_jwt_token),
+    path('api/token/refresh/', refresh_jwt_token),
+    path('api/token/verify/', verify_jwt_token),
 ]
 
 if settings.DEBUG:
@@ -47,6 +51,7 @@ if settings.DEBUG:
             kwargs={"exception": Exception("Page not Found")},
         ),
         path("500/", default_views.server_error),
+        path('swagger/', schema_view)
     ]
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar
