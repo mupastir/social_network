@@ -1,14 +1,11 @@
-from django.urls import path
+from rest_auth.registration.views import VerifyEmailView
 
-from social_network.users.views import (
-    user_detail_view,
-    user_redirect_view,
-    user_update_view,
-)
+from django.conf.urls import url
 
-app_name = "users"
+from .api import views
+
 urlpatterns = [
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<str:username>/", view=user_detail_view, name="detail"),
+    url('register/', views.UserRegisterView.as_view(), name='register'),
+    url('confirm-email/(?P<key>[-:\w]+)/$', VerifyEmailView.as_view(),
+        name='account_confirm_email'),
 ]
