@@ -14,6 +14,22 @@ REST API social network
 :License: MIT
 
 
+Install
+--------
+1. clone or download the repo
+2. run `docker-compose -f local.yml up --build -d`
+3. make superuser with python manage.py createsuperuser and type the stuff
+
+Check
+-----
+
+1. Make sure you have set all the values filled on bot_rules.ini in directory bot
+2. Connect to container with project `docker-compose -f local.yml exec django bash`
+3. Go to directory `bot`, (for example: `cd bot`)
+4. Run command `python start.py`
+5. see postman collection to check if all is correctly created
+
+
 Settings
 --------
 
